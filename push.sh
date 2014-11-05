@@ -14,7 +14,7 @@ rm -f $TAR_FILE            # prevent exponential tarball growth ;-)
 tessel pack index.js
 
 # this is needed until firmware includes…
-tessel push ../cloud-client/index.js -a $NET_ADDR -a $NET_PORT
+tessel push ../cloud-client/index.js -a $NET_ADDR -a $((NET_PORT+1))
 sleep 5   # give script a chance to startup and register itself
 
 curl -X POST -H "Accept: application/vnd.tessel.remote.v1" -F "api_key=$TESSEL_KEY" -F "device_id=$TESSEL_ID" -F "script_tar=@$TAR_FILE" http://$NET_ADDR:$NET_PORT/api/tessel/$TESSEL_ID/code
