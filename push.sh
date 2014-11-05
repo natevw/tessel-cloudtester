@@ -17,5 +17,13 @@ tessel pack index.js
 tessel push ../cloud-client/index.js -a $NET_ADDR -a $((NET_PORT+1))
 sleep 5   # give script a chance to startup and register itself
 
-curl -X POST -H "Accept: application/vnd.tessel.remote.v1" -F "api_key=$TESSEL_KEY" -F "device_id=$TESSEL_ID" -F "script_tar=@$TAR_FILE" http://$NET_ADDR:$NET_PORT/api/tessel/$TESSEL_ID/code
+# see https://github.com/tessel/cloud/issues/11 for docs
+
+# first make sure it is registered to us (or at least we get a bit more clarity as to its status)
+curl -X DELETE -H "Accept: application/vnd.tessel.remote.v1" -H "Authorization: Bearer $TESSEL_KEY" http://$NET_ADDR:$NET_PORT/api/tessel/$TESSEL_ID
+echo
+curl -X POST -H "Accept: application/vnd.tessel.remote.v1" -H "Authorization: Bearer $TESSEL_KEY" -F "device_id=$TESSEL_ID" http://$NET_ADDR:$NET_PORT/api/tessel
+echo
+# then actually push
+curl -X POST -H "Accept: application/vnd.tessel.remote.v1" -H "Authorization: Bearer $TESSEL_KEY" -F "script_tar=@$TAR_FILE" http://$NET_ADDR:$NET_PORT/api/tessel/$TESSEL_ID/code
 echo
