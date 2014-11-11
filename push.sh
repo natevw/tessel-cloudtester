@@ -14,8 +14,8 @@ rm -f $TAR_FILE            # prevent exponential tarball growth ;-)
 tessel pack index.js
 
 # this is needed until firmware includes…
-tessel push ../cloud-client/index.js -a $NET_ADDR -a $((NET_PORT+1))
-sleep 5   # give script a chance to startup and register itself
+#tessel push ../cloud-client/index.js -a $NET_ADDR -a $((NET_PORT+1))
+#sleep 5   # give script a chance to startup and register itself
 
 # see https://github.com/tessel/cloud/issues/11 for docs
 
