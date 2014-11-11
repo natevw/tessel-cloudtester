@@ -8,6 +8,10 @@ set -o nounset -o errexit
 : ${NET_PORT:=3000}
 : ${TAR_FILE:=tessel-${PWD##*/}.tar}
 : ${NUM_FILE:=the_number}
+: ${BIG_FILE:=big_file}
+: ${BIG_SIZE:=1024}
+
+dd if=/dev/random bs=1024 count=$BIG_SIZE > $BIG_FILE
 
 echo $((`cat $NUM_FILE` + 1)) > $NUM_FILE   # increment counter
 rm -f $TAR_FILE            # prevent exponential tarball growth ;-)
